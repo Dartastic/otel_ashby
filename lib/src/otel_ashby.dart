@@ -1,13 +1,13 @@
-// Licensed under the Dartastic Pro Software License Agreement.
+// Licensed under the Apache License, Version 2.0
 // Copyright 2025-2026 Mindful Software LLC d/b/a Dartastic.io, All rights reserved.
 
-import 'package:dartastic_opentelemetry/dartastic_opentelemetry.dart';
+import 'package:dartastic_opentelemetry_api/dartastic_opentelemetry_api.dart';
 
 import 'otel_ashby_suppression.dart';
 
 const _tracerName = 'dartastic_otel_libs_ashby';
 
-Tracer _tracer() => OTel.tracerProvider().getTracer(_tracerName);
+APITracer _tracer() => OTelAPI.tracerProvider().getTracer(_tracerName);
 
 class AshbyResult {
   const AshbyResult({
@@ -115,116 +115,116 @@ Future<T> tracedAshby<T>({
   final span = _tracer().startSpan(
     'ashby $operation',
     kind: SpanKind.client,
-    attributes: OTel.attributesFromMap(m),
+    attributes: OTelAPI.attributesFromMap(m),
   );
   try {
     final r = await invoke();
     if (r.result != null) {
       final extras = <Attribute<Object>>[];
       if (r.result!.entityKind != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'ashby.entity.kind',
           r.result!.entityKind!,
         ));
       }
       if (r.result!.entityId != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'ashby.entity.id',
           r.result!.entityId!,
         ));
       }
       if (r.result!.candidateId != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'ashby.candidate.id',
           r.result!.candidateId!,
         ));
       }
       if (r.result!.applicationId != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'ashby.application.id',
           r.result!.applicationId!,
         ));
       }
       if (r.result!.applicationStatus != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'ashby.application.status',
           r.result!.applicationStatus!,
         ));
       }
       if (r.result!.applicationStage != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'ashby.application.stage',
           r.result!.applicationStage!,
         ));
       }
       if (r.result!.archiveReason != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'ashby.archive.reason',
           r.result!.archiveReason!,
         ));
       }
       if (r.result!.jobId != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'ashby.job.id',
           r.result!.jobId!,
         ));
       }
       if (r.result!.jobStatus != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'ashby.job.status',
           r.result!.jobStatus!,
         ));
       }
       if (r.result!.locationId != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'ashby.location.id',
           r.result!.locationId!,
         ));
       }
       if (r.result!.sourceName != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'ashby.source.name',
           r.result!.sourceName!,
         ));
       }
       if (r.result!.interviewId != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'ashby.interview.id',
           r.result!.interviewId!,
         ));
       }
       if (r.result!.interviewStatus != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'ashby.interview.status',
           r.result!.interviewStatus!,
         ));
       }
       if (r.result!.feedbackFormId != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'ashby.feedback_form.id',
           r.result!.feedbackFormId!,
         ));
       }
       if (r.result!.feedbackRating != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'ashby.feedback.rating',
           r.result!.feedbackRating!,
         ));
       }
       if (r.result!.offerStatus != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'ashby.offer.status',
           r.result!.offerStatus!,
         ));
       }
       if (r.result!.referralBonusUsd != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'ashby.referral.bonus_cents',
           r.result!.referralBonusUsd!,
         ));
       }
       if (r.result!.statusCode != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'http.response.status_code',
           r.result!.statusCode!,
         ));
@@ -235,13 +235,13 @@ Future<T> tracedAshby<T>({
           );
         }
       }
-      if (extras.isNotEmpty) span.addAttributes(OTel.attributes(extras));
+      if (extras.isNotEmpty) span.addAttributes(OTelAPI.attributes(extras));
     }
     return r.value;
   } catch (e, st) {
-    span.addAttributes(OTel.attributes([
-      OTel.attributeString(
-        ErrorResource.errorType.key,
+    span.addAttributes(OTelAPI.attributes([
+      OTelAPI.attributeString(
+        ErrorAttributes.errorType.key,
         e.runtimeType.toString(),
       ),
     ]));
